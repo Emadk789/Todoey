@@ -10,7 +10,8 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
 
-    let itemArray = ["First Do", "The second to be done", "The theird"]
+    var itemArray = ["First Do", "The second to be done", "The theird"]
+    var cellTexts = [String]()
     var cell = UITableViewCell()
     
     
@@ -23,8 +24,7 @@ class TodoListViewController: UITableViewController {
         return itemArray.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //tableView.cellForRow(at: indexPath.row)
-        //UITableViewCell.add
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         cell.textLabel?.text = itemArray[indexPath.row]
         return cell
@@ -46,6 +46,24 @@ class TodoListViewController: UITableViewController {
         
     }
     
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        var textField = UITextField()
+        let alert = UIAlertController(title: "Add New ToDo item", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add item", style: .default) { (action) in
+            
+             print(textField.text!)
+            self.itemArray.append(textField.text!)
+            self.tableView.reloadData()
+        }
+        alert.addTextField { (alertTextField) in
+           textField = alertTextField
+        }
+        alert.addAction(action)
+        
+       present(alert, animated: true, completion: nil)
+       
+        
+    }
     
 }
 
